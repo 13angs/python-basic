@@ -1,4 +1,4 @@
-import pika, sys, os
+import pika, sys, os, json
 
 class Subscriber:
     def __init__(self, host) -> None:
@@ -6,7 +6,8 @@ class Subscriber:
         self.channel = connection.channel()
 
     def on_message_callback(self, ch, method, properties, body) -> None:
-        print(" [x] Received %r" % body)
+        message = json.loads(body)
+        print(" [x] Received %r" % message)
 
     def setup(self, exchange, exchange_type, queue_name, routing_key) -> None:
         self.channel.queue_declare(queue=queue_name)
