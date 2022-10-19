@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  pyb-bin-compressor:
+    build: 
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+
+      # Update 'VARIANT' to pick a .NET Core version: 3.1, 6.0
+      # Append -bullseye or -focal to pin to an OS version
+      args:
+        - "NODE_VERSION=lts/*"
+    container_name: pyb-bin-compressor-${OWNER}
+
+    volumes:
+      - ../..:/workspaces/python-basic:cached
+      - /var/run/docker.sock:/var/run/docker.sock
+
+    command: sleep infinity
+
+    networks:
+      - eng-ssl-swarm-network
+
+networks:
+  eng-ssl-swarm-network:
+    external: true
+    name: eng-ssl-swarm-network
