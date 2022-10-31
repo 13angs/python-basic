@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  pyb-mongo-msg:
+    build:
+      context: ..
+      dockerfile: ./.devcontainer/Dockerfile
+    
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ../..:/workspaces/python-basic:cached
+    
+    command: sleep infinity
+
+    networks:
+      - pyb-network
+
+networks:
+  pyb-network:
+    name: pyb-network
+    external: true
